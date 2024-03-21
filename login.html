@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>PFMS</title>
+    <link rel="stylesheet" href="login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <!-- NAVBAR CREATION -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="/">Blogs</a>
+      
+
+            <a class="right" href="login.html">Log in</a>
+        </nav>
+        <form action="" class="search-bar">
+            <input type="text" placeholder="Search">
+            <button><i class='bx bx-search'></i></button>
+        </form>
+    </header>
+    <!-- LOGIN FORM CREATION -->
+    <div class="background"></div>
+    <div class="container">
+        
+        <div class="login-section">
+            <div class="form-box login">
+              <form method="post" action="login.php">
+                    <h2>Sign In</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-password">
+                        <label for=""><input type="checkbox">Remember Me</label>
+                        <a href="/">Forget Password</a>
+                    </div>
+                    <button class="btn" name="signin" >Login In</button>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="/" class="register-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+            <div class="form-box register">
+              <form method="post" action="login.php">
+
+                    <h2>Sign Up</h2>
+
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" name="username" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-password">
+                        
+                    </div>
+                    <button class="btn" name="signup" >Login In</button>
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href="/" class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- SIGN UP FORM CREATION -->
+
+    <script src="login.js"></script>
+
+<!-- Add the following script at the end of your HTML file, just before the closing </body> tag. -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginForm = document.querySelector(".form-box.login form");
+      const signUpForm = document.querySelector(".form-box.register form");
+  
+      // Function to validate email format
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+  
+      // Function to validate password
+      function isValidPassword(password) {
+        // You can add your own password validation rules here
+        return password.length >= 6;
+      }
+  
+      // Function to validate username (should contain only characters)
+      function isValidUsername(username) {
+        const usernameRegex = /^[a-zA-Z]+$/;
+        return usernameRegex.test(username);
+      }
+  
+      // Function to display error message
+      function displayErrorMessage(inputElement, message) {
+        const errorMessageElement = document.createElement("span");
+        errorMessageElement.className = "error-message";
+        errorMessageElement.textContent = message;
+  
+        const parentElement = inputElement.parentElement;
+        parentElement.appendChild(errorMessageElement);
+  
+        inputElement.classList.add("error");
+      }
+  
+      // Function to remove error message
+      function removeErrorMessage(inputElement) {
+        const parentElement = inputElement.parentElement;
+        const errorMessageElement = parentElement.querySelector(".error-message");
+        if (errorMessageElement) {
+          parentElement.removeChild(errorMessageElement);
+        }
+  
+        inputElement.classList.remove("error");
+      }
+  
+      // Add form submit event listeners for login and sign up forms
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const emailInput = loginForm.querySelector("input[type='email']");
+        const passwordInput = loginForm.querySelector("input[type='password']");
+        const rememberCheckbox = loginForm.querySelector("input[type='checkbox']");
+  
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const rememberMe = rememberCheckbox.checked;
+  
+        if (!isValidEmail(email)) {
+          displayErrorMessage(emailInput, "Please enter a valid email address.");
+          return;
+        } else {
+          removeErrorMessage(emailInput);
+        }
+  
+        if (!isValidPassword(password)) {
+          displayErrorMessage(passwordInput, "Password should be at least 6 characters long.");
+          return;
+        } else {
+          removeErrorMessage(passwordInput);
+        }
+  
+        // Perform login process here
+        // For example, you can submit the form data to the server using AJAX
+  
+        // Clear the form after successful login
+        emailInput.value = "";
+        passwordInput.value = "";
+        rememberCheckbox.checked = false;
+      });
+  
+      signUpForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const usernameInput = signUpForm.querySelector("input[type='text']");
+        const emailInput = signUpForm.querySelector("input[type='email']");
+        const passwordInput = signUpForm.querySelector("input[type='password']");
+  
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+  
+        if (!isValidUsername(username)) {
+          displayErrorMessage(usernameInput, "Username should contain only characters.");
+          return;
+        } else {
+          removeErrorMessage(usernameInput);
+        }
+  
+        if (!isValidEmail(email)) {
+          displayErrorMessage(emailInput, "Please enter a valid email address.");
+          return;
+        } else {
+          removeErrorMessage(emailInput);
+        }
+  
+        if (!isValidPassword(password)) {
+          displayErrorMessage(passwordInput, "Password should be at least 6 characters long.");
+          return;
+        } else {
+          removeErrorMessage(passwordInput);
+        }
+  
+        // Perform sign up process here
+        // For example, you can submit the form data to the server using AJAX
+  
+        // Clear the form after successful sign up
+        usernameInput.value = "";
+        emailInput.value = "";
+        passwordInput.value = "";
+      });
+    });
+  </script> 
+</body>
+
+</html>
